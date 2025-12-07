@@ -1,20 +1,21 @@
 Prolog
-0x4007c4 <readString>:       stp     x19, x20, [sp, #-80]!
-0x4007c8 <readString+4>:     stp     x21, x30, [sp, #16]
+0x4007c4 <readString>:       stp     x19, x20, [sp, #-80]!                      // saves the values of these regs to stack
+0x4007c8 <readString+4>:     stp     x21, x30, [sp, #16]                        // to obey callee-saved reg shit
+// address of buf is sp + 32
 
 First loop setup
-0x4007cc <readString+8>:     mov     x19, #0x0                       // #0      // i = 0
-0x4007d0 <readString+12>:
+0x4007cc <readString+8>:     mov     x19, #0x0                                  // #0      // i = 0
+0x4007d0 <readString+12>:    adrp    x21, 0x420000 <__libc_start_main@got.plt>  //  load c library stuff
 
 
-0x4007d4 <readString+16>:    mov     w20, w19                                   // x20 is another int       
-0x4007d8 <readString+20>:    ldr     x0, [x21, #72]                             // char buf[BUFSIZE];
-0x4007dc <readString+24>:    bl      0x400640 <fgetc@plt>
+0x4007d4 <readString+16>:    mov     w20, w19                                   // ????
+0x4007d8 <readString+20>:    ldr     x0, [x21, #72]                             // getting stdin and putting it in x0 to be used as arg
+0x4007dc <readString+24>:    bl      0x400640 <fgetc@plt>                       // call getchar(stdin)
 0x4007e0 <readString+28>:    add     x19, x19, #0x1                             // increment i
 0x4007e4 <readString+32>:    cmp     w0, #0xa                                   // c == '\n'
 
 // if previous compare is "not equal" (Z == 0), run the next comparison
-else (if Z == 1): then set Z = 1
+// else (if Z == 1): then set Z = 1
 
 0x4007e8 <readString+36>:    ccmn    w0, #0x1, #0x4, ne      // ne = any        // c == EOF
 0x4007ec <readString+40>:    b.eq    0x400800 <readString+60>  // b.none        // break if Z == 1 (result is equal for either previous comparisons)
@@ -24,17 +25,16 @@ else (if Z == 1): then set Z = 1
 0x4007f8 <readString+52>:    sturb   w0, [x1, #-1]          
 0x4007fc <readString+56>:    b       0x4007d4 <readString+16>
 
-0x400800 <readString+60>:    add     x0, sp, #0x20                              // buf[i] = '/0'
-0x400804 <readString+64>:    strb    wzr, [x0, w20, sxtw]
-0x400808 <readString+68>:    mov     x0, #0x1                        // #1
-0x40080c <readString+72>:
+0x400800 <readString+60>:    add     x0, sp, #0x20                              // puts address of buf in x0
+0x400804 <readString+64>:    strb    wzr, [x0, w20, sxtw]                       // stores 0 in sign-extended w20 ????
+0x400808 <readString+68>:    mov     x0, #0x1                        // #1      // puts 1 in x0
 
-
-0x400810 <readString+76>:    add     x3, x3, #0x58
-0x400814 <readString+80>:    add     x1, x3, x0
-0x400818 <readString+84>:    add     x2, sp, #0x20
-0x40081c <readString+88>:    add     x2, x0, x2
-0x400820 <readString+92>:    ldurb   w2, [x2, #-1]
+0x40080c <readString+72>:    adrp    x3, 0x420000 <__libc_start_main@got.plt>
+0x400810 <readString+76>:    add     x3, x3, #0x58                              // getting something from stdlib (terminating null byte maybe)
+0x400814 <readString+80>:    add     x1, x3, x0                                 // adds 1 to it and puts in x1
+0x400818 <readString+84>:    add     x2, sp, #0x20                              // puts addr of buf in x2
+0x40081c <readString+88>:    add     x2, x0, x2                                 // adds 1 to buf
+0x400820 <readString+92>:    ldurb   w2, [x2, #-1]                              // 
 0x400824 <readString+96>:    sturb   w2, [x1, #-1]
 0x400828 <readString+100>:   add     x0, x0, #0x1
 0x40082c <readString+104>:   cmp     x0, #0x31
