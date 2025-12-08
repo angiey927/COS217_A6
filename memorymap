@@ -145,3 +145,9 @@ Address (in hex) | Description
         0x420085 | '0'
         0x420086 | '0'
         0x420087 | '0'
+
+Step 2.4 - Stack Section:
+Offset | Description
+     0 |
+     8 |
+    16 |
