@@ -17,8 +17,11 @@ int main(void) {
     /* max 55 chars since there are 48 bytes for buf + 2 * 8 for ints
     and need to reserve one byte for nullbyte */
     printf("Enter your name(s) (max 55 chars):\n");
-    while ((i < 55) && (ch != '\n')) {
+    while ((i < 55)) {
         ch = getchar();
+        if (ch == "\n") {
+            break;
+        }
         pcName[i] = ch;
         i++;
     }
