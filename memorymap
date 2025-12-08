@@ -90,3 +90,7 @@ Epilog and return 0
 0x4008c4 <main+104>: mov     w0, #0x0                        // #0              // setting return to 0
 0x4008c8 <main+108>: ldp     x19, x30, [sp], #16
 0x4008cc <main+112>: ret
+
+Step 2.2 - Data Section:
+Address (in hex) | Content (in hex) | Description
+          420044 |               44 | grade
