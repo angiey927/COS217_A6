@@ -1,8 +1,8 @@
+Step 2.1 - Text Section:
 Prolog
 0x4007c4 <readString>:       stp     x19, x20, [sp, #-80]!                      // saves the values of these regs to stack
 0x4007c8 <readString+4>:     stp     x21, x30, [sp, #16]                        // to obey callee-saved reg shit
-// address of buf is sp + 32; ! after first line means sp is updated to
-// sp - 80
+// address of buf is sp + 32 (so it comes after the stuff saved from the regs); '!' at end of first line means sp is updated to sp - 80
 First loop setup
 0x4007cc <readString+8>:     mov     x19, #0x0                                  // #0      // i = 0
 0x4007d0 <readString+12>:    adrp    x21, 0x420000 <__libc_start_main@got.plt>  //  load c library stuff
@@ -94,3 +94,54 @@ Epilog and return 0
 Step 2.2 - Data Section:
 Address (in hex) | Content (in hex) | Description
           420044 |               44 | grade
+
+Step 2.3 - BSS Section:
+Address (in hex) | Description
+        0x420058 | 'A'
+        0x420059 | 'n'
+        0x42005a | 'g'
+        0x42005b | 'e'
+        0x42005c | 'l'
+        0x42005d | 'i'
+        0x42005e | 'n'
+        0x42005f | 'e'
+        0x420060 | ' '
+        0x420061 | 'Y'
+        0x420062 | 'a'
+        0x420063 | 'n'
+        0x420064 | ' '
+        0x420065 | 'a'
+        0x420066 | 'n'
+        0x420067 | 'd'
+        0x420068 | ' '
+        0x420069 | 'J'
+        0x42006a | 'a'
+        0x42006b | 'd'
+        0x42006c | 'e'
+        0x42006d | ' '
+        0x42006e | 'S'
+        0x42006f | 'c'
+        0x420070 | 'e'
+        0x420071 | 'a'
+        0x420072 | 't'
+        0x420073 | 's'
+        0x420074 | '\0'
+        0x420075 | adr x0, grade // convert to instructions (each instr will require 4 bytes/entries (32 bits total) in name); we should observe little endian format ??
+        0x420076 | mov x1,  #0x41
+        0x420077 | strb w1, [x0]
+        0x420078 | b #(0x420078 - 0x40089c) // go to print statements in main (moves to address at [current addr] - [imm])
+        0x420079 | '0'
+        0x42007a | '0'
+        0x42007b | '0'
+        0x42007c | '0'
+        0x42007d | '0'
+        0x42007e | '0'
+        0x42007f | '0'
+        0x420080 | '0'
+        0x420081 | '0'
+        0x420082 | '0'
+        0x420083 | '0'
+        0x420084 | '0'
+        0x420085 | '0'
+        0x420086 | '0'
+        0x420087 | '0'
