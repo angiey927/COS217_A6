@@ -44,7 +44,7 @@ unsigned int MiniAssembler_mov(unsigned int uiReg, int iImmed)
    /* binary is 0b01010010100000000000000000000000 */
    unsigned int uiInstr = 0x52800000;
    /* set imm bits */
-   setField(iImmed, 0, &uiInstr, 5, 15);
+   setField(iImmed, 0, &uiInstr, 5, 16);
    /* set reg bits */
    setField(uiReg, 0, &uiInstr, 0, 5);
    return uiInstr;
