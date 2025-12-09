@@ -81,13 +81,13 @@ unsigned int MiniAssembler_strb(unsigned int uiFromReg,
    unsigned int uiInstr;
 
    /* base instruction code */
-   /* binary is 0b00111000000000000000010000000000*/
-   uiInstr = 0x38000400;
+   /* binary is 0b00111001000000000000000000000000*/
+   uiInstr = 0x39000000;
    /* imm bits stay as 0 since header does not specify offset option */
    /* inserting source reg */
-   setField(uiFromReg, 0, &uiInstr, 5, 5);
+   setField(uiFromReg, 0, &uiInstr, 0, 5);
    /* inserting dest reg */
-   setField(uiToReg, 0, &uiInstr, 0, 5);
+   setField(uiToReg, 0, &uiInstr, 5, 5);
    return uiInstr;
 }
 

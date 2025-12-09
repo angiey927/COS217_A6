@@ -49,7 +49,7 @@ int main(void) {
 
     /* pad as necessary */
     for (; i < 48; i++) {
-        fprint(psFile, "%c", 0x30);
+        fprintf(psFile, "%c", 0x30);
     }
 
     /* overwrite getName's x30 with addr of inject code in bss */
