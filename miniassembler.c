@@ -19,8 +19,21 @@ static void setField(unsigned int uiSrc, unsigned int uiSrcStartBit,
                      unsigned int *puiDest, unsigned int uiDestStartBit,
                      unsigned int uiNumBits)
 {
-   /* Your code here */
-
+   unsigned int srcMask = 1;
+   unsigned int srcSet;
+   /* create mask to extract target bits of uiSrc */
+   /* make mask cover the uiNumBits */
+   srcMask = srcMask << uiNumBits;
+   /* subtract 1 so the 0s shifted in become 1s*/
+   srcMask--;
+   /* from uiSrc, remove bits before the start bit */
+   uiSrc = uiSrc >> uiSrcStartBit;
+   /* apply mask to extract bits from uiSrc */
+   srcSet = uiSrc & srcMask;
+   /* shift srcSet to start from uiDestStartBit*/
+   srcSet = srcSet << uiDestStartBit;
+   /* set puiDest's bits */
+   *puiDest = *puiDest | srcSet;
 }
 
 /*--------------------------------------------------------------------*/
