@@ -6,6 +6,13 @@ a B, the latter of which will overwrite getName's stored x30
 
 #include <stdio.h>
 
+/*
+reads in a name w/ length of up to 47 chars from stdin, truncating
+beyond 47 chars. creates file dataB. in dataB, writes the name
+terminated with a nullbyte, pads with '0's up to the 48th character in
+the file, then finally writes the address of the instr in main to
+get a B. returns 0
+*/
 int main(void) {
     char pcName[47];
     char ch = 0;

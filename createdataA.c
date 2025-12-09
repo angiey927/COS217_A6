@@ -1,5 +1,21 @@
+/*
+Produces a file called dataA with the student name, nullbyte(s),
+instructions to change the grade to an "A", padding to overrun the
+stack, and the address of the first print instruction in main, the
+latter of which will overwrite getName's stored x30.
+*/
+
 #include <stdio.h>
 #include "miniassembler.h"
+
+/*
+reads in a name w/ length of up to 31 chars from stdin, truncating
+beyond 31 chars. creates file dataA. in dataA, writes the name
+terminated with a nullbyte, pads with nullbytes to ensure instrs are
+4-byte aligned, writes the instrs for the attack, pads with '0's as
+necessary, then finally writes the address of the first print instr
+in main. returns 0
+*/
 
 int main(void) {
     char pcInject[47];
