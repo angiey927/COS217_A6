@@ -41,13 +41,12 @@ static void setField(unsigned int uiSrc, unsigned int uiSrcStartBit,
 unsigned int MiniAssembler_mov(unsigned int uiReg, int iImmed)
 {
    /* fixed bits for instr */
-   unsigned int uiInstr = 0b01010010100000000000000000000000;
-   /* shift bits for imm into position */
-   iImmed = iImmed << 5;
-   /* set imm bits by ORing */
-   uiInstr = uiInstr | iImmed;
+   /* binary is 0b01010010100000000000000000000000 */
+   unsigned int uiInstr = 0x52800000;
+   /* set imm bits */
+   setField(iImmed, 0, &uiInstr, 5, 15);
    /* set reg bits */
-   uiInstr = uiInstr | uiReg;
+   setField(uiReg, 0, &uiInstr, 0, 5);
    return uiInstr;
 }
 
@@ -82,12 +81,13 @@ unsigned int MiniAssembler_strb(unsigned int uiFromReg,
    unsigned int uiInstr;
 
    /* base instruction code */
-   uiInstr = 0b00111000000000000000010000000000;
+   /* binary is 0b00111000000000000000010000000000*/
+   uiInstr = 0x38000400;
    /* imm bits stay as 0 since header does not specify offset option */
    /* inserting source reg */
-   setField(uiFromReg, 0, uiInstr, 5, 5);
+   setField(uiFromReg, 0, &uiInstr, 5, 5);
    /* inserting dest reg */
-   setField(uiToReg, 0, uiInstr, 0, 5);
+   setField(uiToReg, 0, &uiInstr, 0, 5);
    return uiInstr;
 }
 
@@ -96,6 +96,17 @@ unsigned int MiniAssembler_strb(unsigned int uiFromReg,
 unsigned int MiniAssembler_b(unsigned long ulAddr,
    unsigned long ulAddrOfThisInstr)
 {
-   /* Your code here */
+   unsigned int uiInstr;
+   signed int iOffset;
 
+   /* base instruction code */
+   /* binary is 0b00010100000000000000000000000000 */
+   uiInstr = 0x14000000;
+   /* shift by two places to account for how imm26 is
+   offset / 4 */
+   ulAddr = ulAddr >> 2;
+   ulAddrOfThisInstr = ulAddrOfThisInstr >> 2;
+   iOffset = (unsigned int)(ulAddr - ulAddrOfThisInstr);
+   setField(iOffset, 0, &uiInstr, 0, 26);
+   return uiInstr;
 }
