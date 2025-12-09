@@ -14,7 +14,7 @@ int main(void) {
     FILE *psFile;
 
     /* get name(s) to use in dataB */
-    printf("Enter your name(s) (max 55 chars):\n");
+    printf("Enter your name(s) (max 47 chars):\n");
     while ((i < 47)) {
         ch = getchar();
         if (ch == '\n') {
