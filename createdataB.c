@@ -16,11 +16,8 @@ get a B. returns 0
 */
 int main(void) {
     char pcName[47] = "Angeline Yan and Jade Sceats";
-    int i = 0;
     unsigned long uiTargetAddr = 0x400890;
     FILE *psFile;
-
-    i = strlen(pcName);
 
     psFile = fopen("dataB", "w");
     /* fill buf */
