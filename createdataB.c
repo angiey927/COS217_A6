@@ -21,7 +21,7 @@ int main(void) {
     unsigned long uiTargetAddr = 0x400890;
     FILE *psFile;
 
-    int i = strlen(pcName);
+    i = strlen(pcName);
 
     psFile = fopen("dataB", "w");
     /* fill buf */
