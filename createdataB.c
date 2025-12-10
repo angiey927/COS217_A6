@@ -5,7 +5,6 @@ a B, the latter of which will overwrite getName's stored x30
 */
 
 #include <stdio.h>
-#include <string.h>
 
 /*
 reads in a name w/ length of up to 47 chars from stdin, truncating

