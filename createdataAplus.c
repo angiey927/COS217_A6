@@ -16,11 +16,6 @@ int main(void) {
     instructions) */
     iNameLength = strlen(pcName) + 1;
     strcpy(pcInject, pcName);
-    
-    /* ensure instructions are 4-byte aligned */
-    while ((iNameLength) % 4 != 0) {
-       pcInject[iNameLength++] = '\0';
-    }
 
     psFile = fopen("dataAplus", "w");
     /* write name */
