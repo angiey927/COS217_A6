@@ -19,9 +19,8 @@ in main. returns 0
 
 int main(void) {
     char pcInject[47] = "Angeline Yan and Jade Sceats";
-    char ch = 0;
     int i = 0;
-    int iNameLength;
+    int iNameLength = 4
     unsigned long uiTargetAddr = 0x400890;
     unsigned int uiAdr, uiMov, uiStrb, uiB;
     FILE *psFile;

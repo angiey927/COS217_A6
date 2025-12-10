@@ -15,7 +15,7 @@ the file, then finally writes the address of the instr in main to
 get a B. returns 0
 */
 int main(void) {
-    char pcName[47] = "Angeline Yan and Jade Sceats";
+    char pcName[48] = "Angeline Yan and Jade Sceats";
     unsigned long uiTargetAddr = 0x400890;
     FILE *psFile;
 
