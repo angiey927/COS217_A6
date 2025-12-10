@@ -5,6 +5,7 @@ a B, the latter of which will overwrite getName's stored x30
 */
 
 #include <stdio.h>
+#include <string.h>
 
 /*
 reads in a name w/ length of up to 47 chars from stdin, truncating
@@ -14,28 +15,13 @@ the file, then finally writes the address of the instr in main to
 get a B. returns 0
 */
 int main(void) {
-    char pcName[47];
+    char pcName[47] = "Angeline Yan and Jade Sceats";
     char ch = 0;
     int i = 0;
     unsigned long uiTargetAddr = 0x400890;
     FILE *psFile;
 
-    /* get name(s) to use in dataB */
-    printf("Enter your name(s) (max 47 chars):\n");
-    while ((i < 47)) {
-        ch = getchar();
-        if (ch == '\n') {
-            break;
-        }
-        pcName[i] = ch;
-        i++;
-    }
-    /* add nullbyte */
-    pcName[i++] = '\0';
-    /* pad as necessary */
-    for (; i < 48; i++) {
-        pcName[i] = '0';
-    }
+    int i = strlen(pcName);
 
     psFile = fopen("dataB", "w");
     /* fill buf */
