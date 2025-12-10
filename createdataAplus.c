@@ -22,7 +22,7 @@ int main(void) {
        pcInject[iNameLength++] = '\0';
     }
 
-    psFile = fopen("dataA", "w");
+    psFile = fopen("dataAplus", "w");
     /* write name */
     fwrite(pcInject, sizeof(char), iNameLength, psFile);
     /* write instructions */
