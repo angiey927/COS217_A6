@@ -4,7 +4,7 @@
 
 int main(void) {
     char pcInject[48];
-    char pcName[] = "Ang & Jade";
+    char pcName[] = "Angeline & Jade";
     int iNameLength;
     int i;
     unsigned long uiTargetAddr = 0x400890;
