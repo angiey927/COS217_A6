@@ -30,8 +30,10 @@ int main(void) {
     uiB = MiniAssembler_b(0x4008ac, 0x42006c);
     fwrite(&uiB, sizeof(unsigned int), 1, psFile);
     i = i + 4;
-    fprintf(psFile, "%s", "A+ is your grade.\n");
-    i = i + 19;
+    fprintf(psFile, "%s", "A+ is your grade.\0");
+    fprintf(psFile, "%c", "\n");
+
+    i = i + 20;
 
     /* pad as necessary */
     for (; i < 48; i++) {
