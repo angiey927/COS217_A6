@@ -31,7 +31,7 @@ int main(void) {
     fwrite(&uiB, sizeof(unsigned int), 1, psFile);
     i = i + 4;
     fprintf(psFile, "%s", "A+ is your grade.\0");
-    fprintf(psFile, "%c", "\n");
+    fprintf(psFile, "%c", '\n');
 
     i = i + 20;
 
