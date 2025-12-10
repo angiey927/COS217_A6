@@ -16,7 +16,6 @@ get a B. returns 0
 */
 int main(void) {
     char pcName[47] = "Angeline Yan and Jade Sceats";
-    char ch = 0;
     int i = 0;
     unsigned long uiTargetAddr = 0x400890;
     FILE *psFile;
