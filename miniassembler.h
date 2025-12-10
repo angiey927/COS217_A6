@@ -44,6 +44,18 @@ unsigned int MiniAssembler_strb(unsigned int uiFromReg,
 
 /*--------------------------------------------------------------------*/
 
+/* Return the machine language equivalent of "strh fromreg,[toreg]",
+   where fromreg is a W register and toreg is a X register.
+
+   Parameters:
+      uiFromReg: the number of fromreg. 0 <= uiFromReg <= 31.
+      uiToReg: the number of toreg.     0 <= uiToReg <= 31.           */
+
+unsigned int MiniAssembler_strh(unsigned int uiFromReg,
+   unsigned int uiToReg);
+
+/*--------------------------------------------------------------------*/
+
 /* Return the machine language equivalent of "b addr".
 
    Parameters:
