@@ -18,33 +18,13 @@ in main. returns 0
 */
 
 int main(void) {
-    char pcInject[47];
+    char pcInject[47] = "Angeline Yan and Jade Sceats";
     char ch = 0;
     int i = 0;
     int iNameLength;
     unsigned long uiTargetAddr = 0x400890;
     unsigned int uiAdr, uiMov, uiStrb, uiB;
     FILE *psFile;
-
-    /* get name(s) to use in dataA */
-    /* max name length is 48 - 1 (for nullbyte) - 4 * 4 (for the 4
-    instructions) */
-    printf("Enter your name(s) (max 31 chars):\n");
-    while ((i < 31)) {
-        ch = getchar();
-        if (ch == '\n') {
-            break;
-        }
-        pcInject[i] = ch;
-        i++;
-    }
-    /* add nullbyte */
-    pcInject[i++] = '\0';
-    /* ensure instructions are 4-byte aligned */
-    while (i % 4 != 0) {
-       pcInject[i++] = '\0';
-    }
-    iNameLength = i;
 
     psFile = fopen("dataA", "w");
     /* write name */
