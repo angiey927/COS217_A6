@@ -7,7 +7,7 @@ int main(void) {
     char pcName[] = "Ang & Jade";
     int iNameLength;
     int i;
-    unsigned long uiTargetAddr = 0x400890;
+    unsigned long uiTargetAddr = 0x420064;
     unsigned int uiAdr, uiAdr1, uiB;
     FILE *psFile;
 
