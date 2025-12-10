@@ -39,7 +39,7 @@ int main(void) {
     i = iNameLength + 12;
     /* branch to print instr (0x40089c is addr of print instr in main,
     0x420058 + i is addr of this instr) */
-    uiB = MiniAssembler_b(0x40089c, 0x420058 + iNameLength);
+    uiB = MiniAssembler_b(0x40089c, 0x420058 + i);
     fwrite(&uiB, sizeof(unsigned int), 1, psFile);
     i = i + 4;
 
