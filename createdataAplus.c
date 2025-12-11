@@ -35,7 +35,7 @@ int main(void) {
     i = i + 4;
     /* branch to print instr (0x4008ac is addr of printf instr in main,
     0x42006c is addr of this instr) */
-    uiB = MiniAssembler_b(0x4008ac, 0x420058 + i);
+    uiB = MiniAssembler_b(0x400690, 0x420058 + i);
     fwrite(&uiB, sizeof(unsigned int), 1, psFile);
     i = i + 4;
     fwrite("%s is your grade.\n\0", 1, 20, psFile);
