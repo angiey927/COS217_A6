@@ -30,7 +30,7 @@ int main(void) {
     fwrite(&uiAdr, sizeof(unsigned int), 1, psFile);
     i = i + 4;
     /* put address of new A+ string in reg 1 */
-    uiAdr1 = MiniAssembler_adr(1, 0x420085, 0x420058 + i);
+    uiAdr1 = MiniAssembler_adr(1, 0x420084, 0x420058 + i);
     fwrite(&uiAdr1, sizeof(unsigned int), 1, psFile);
     i = i + 4;
     /* branch to print instr (0x4008ac is addr of printf instr in main,
