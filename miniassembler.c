@@ -110,23 +110,3 @@ unsigned int MiniAssembler_b(unsigned long ulAddr,
    setField(iOffset, 0, &uiInstr, 0, 26);
    return uiInstr;
 }
-
-/*--------------------------------------------------------------------*/
-
-unsigned int MiniAssembler_bl(unsigned long ulAddr,
-   unsigned long ulAddrOfThisInstr)
-{
-   unsigned int uiInstr;
-   signed int iOffset;
-
-   /* base instruction code */
-   /* binary is 0b10010100000000000000000000000000 */
-   uiInstr = 0x94000000;
-   /* shift by two places to account for how imm26 is
-   offset / 4 */
-   ulAddr = ulAddr >> 2;
-   ulAddrOfThisInstr = ulAddrOfThisInstr >> 2;
-   iOffset = (unsigned int)(ulAddr - ulAddrOfThisInstr);
-   setField(iOffset, 0, &uiInstr, 0, 26);
-   return uiInstr;
-}
